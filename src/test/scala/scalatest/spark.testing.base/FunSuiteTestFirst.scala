@@ -11,6 +11,18 @@ import scalatest.model.Pph
 
 class FunSuiteTestFirst extends FunSuite with SharedSparkContext with Checkers {
 
+  markup {
+    """ Technical objective : testing property based test and spark testing base
+      |     val property =
+      |      forAll(DatasetGenerator.genDataset[Pph](sql)(genPph)) {
+      |        dataset =>
+      |          dataset.show(100)
+      |          dataset.map(_.id).count() == dataset.count()
+      |      }
+      |
+      |    check(property)
+    """.stripMargin
+  }
 
   test("test generating Datasets[Physical person] based on case class") {
     val genPph: Gen[Pph] = pphGen
