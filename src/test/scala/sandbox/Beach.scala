@@ -2,9 +2,7 @@ package sandbox
 
 import org.scalacheck.Gen
 
-import scala.io.Source
 import scala.reflect.runtime.{universe => ru}
-import scalatest.model.Pph
 
 
 object Beach{
@@ -30,21 +28,33 @@ object Beach{
   }
 
   def main( args: Array[String] ): Unit = {
-    val gen = numGen
-    println (gen.getClass)
+//    val gen = numGen
+    //    println (gen.getClass)
+    //
+    //    getSymbols[Pph]
+    //      .filter(!_.isMethod)
+    //      .map(x=> x.info)
+    //      .foreach(x => println (x +" --- " + x.getClass))
+    //
+    //    getSymbols[Pph]
+    //      .filter(!_.isMethod)
+    //      .map(x=> genRandom(x.typeSignature))
+    //      .foreach(x=> println (x.getClass))
+    //
+    //      val filePath = "D:\\DL\\s4s\\spark-scala-master\\spark-scala-master\\SparkTestFrameWork\\src\\main\\resources\\DataframeLoader.csv"
+    //    val s = Source.fromFile(filePath).getLines().mkString("\r\n")
+    //    print(s)
 
-    getSymbols[Pph]
-      .filter(!_.isMethod)
-      .map(x=> x.info)
-      .foreach(x => println (x +" --- " + x.getClass))
+    print("parseLine")
+    parseLine("","")
+  }
 
-    getSymbols[Pph]
-      .filter(!_.isMethod)
-      .map(x=> genRandom(x.typeSignature))
-      .foreach(x=> println (x.getClass))
+  def parseLine(line: String, pattern: String): Unit ={
+    val dummyLine = "AAZ_123_ii"
+    val patt = "([A-Z]{3})_([0-9]{3})_([a-z]{2})".r
 
-      val filePath = "D:\\DL\\s4s\\spark-scala-master\\spark-scala-master\\SparkTestFrameWork\\src\\main\\resources\\DataframeLoader.csv"
-    val s = Source.fromFile(filePath).getLines().mkString("\r\n")
-    print(s)
+    val result = patt.findAllMatchIn(dummyLine).toList
+    println(result)
+    patt.findAllMatchIn(dummyLine).foreach(println)
   }
 }

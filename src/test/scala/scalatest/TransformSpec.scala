@@ -4,7 +4,7 @@ import org.apache.spark.sql.SparkSession
 
 import scalatest.model.Pph
 
-class TransformSpec extends AbstractSpec{
+class TransformSpec extends AbstractFlatSpec{
 
   markup  {
     """

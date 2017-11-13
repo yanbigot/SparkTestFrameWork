@@ -1,15 +1,12 @@
 package scalatest
 
 import org.apache.spark.sql.{Dataset, SparkSession}
-import org.scalatest.{BeforeAndAfter, FlatSpec, GivenWhenThen}
 
-import scala.io.Source
 import scalatest.model.Pph
 
-class DataFrameLoaderSpec extends FlatSpec with GivenWhenThen with BeforeAndAfter{
+class DataFrameLoaderSpec extends AbstractFlatSpec{
   var filePath = "D:\\DL\\s4s\\spark-scala-master\\spark-scala-master\\SparkTestFrameWork\\src\\main\\resources\\DataframeLoader.csv"
-
-  markup  {
+  val headerMessage =  {
     """
       This is living documentation !!!!
       Here we do check if the loader is properly returning a dataset as a dataframe
@@ -17,18 +14,16 @@ class DataFrameLoaderSpec extends FlatSpec with GivenWhenThen with BeforeAndAfte
       We ll use a very simple test file in order to make it work, we re looking to retreive those informations
     """
   }
-  markup  {
+  val footerMessage =  {
     """==========================================================================================================
     """
-  }
-  for (line <- Source.fromFile(filePath ).getLines()){
-    markup("|"+line+"|")
   }
 
-  markup  {
-    """==========================================================================================================
-    """
-  }
+  /**
+    * No need to write in fitnesse the input data
+    */
+  showInputDataFromFile(filePath, headerMessage, footerMessage)
+
 
   "A nice loader " should " return the list of  " in {
     Given("sequence of Person")
