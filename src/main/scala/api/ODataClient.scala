@@ -94,7 +94,7 @@ object ODataClient {
       "Connection" -> "Keep-Alive",
       "x-csod-date" -> date,
       "x-csod-signature" -> signature,
-      "x-csod-apiKey" -> apiId,
+      "x-csod-api-key" -> apiId,
       "Content-Type" -> "text/xml"
     )
   }
@@ -115,35 +115,35 @@ object ODataClient {
     response.body
   }
 
-  def authenticate():String = {
-    val date = getDate()
-    val fakeDate = "2017-11-26T11:30:17.000"
-    val fakeSign = "HVAPBrW9EsZ0Sh2iWCiqtWuRejnb0pBlTuBJpvIyLklaohwYdWT3Ufj8S7mShygnBwkKlk7V3hlkScyknjlOMw=="
-    val message = HMACgen.buildStringToSign(date)
-    val signed = HMACgen.generateSignature(apiSecret: String, message: String, date: String, "": String, "HmacSHA512": String)
-    val request = Http(url+sessionUrl)
-      //  val request = Http(url+sessionUrl+"?userName="+userName + "&alias="+date)
-      .param("userName", userName)
-      .param("alias", date)
-      .method("post")
-      //.header("User-Agent", userAgent)
-      //.header("Method", "POST")
-      .header("Connection","Keep-Alive")
-      .header("x-csod-date",date)
-      .header("x-csod-signature",signed)
-      .header("x-csod-apiKey",apiId)
-      .header("Content-Type","text/xml")
-      .header("Accept","text/xml")
-
-    val response = request.postForm.asString
-
-    println(request.url)
-    println(request.headers.mkString)
-    println(response.body.mkString)
-    println(response.headers)
-
-    response.body
-  }
+//  def authenticate():String = {
+//    val date = getDate()
+//    val fakeDate = "2017-11-26T11:30:17.000"
+//    val fakeSign = "HVAPBrW9EsZ0Sh2iWCiqtWuRejnb0pBlTuBJpvIyLklaohwYdWT3Ufj8S7mShygnBwkKlk7V3hlkScyknjlOMw=="
+//    val message = HMACgen.buildStringToSign(date)
+//    val signed = HMACgen.generateSignature(apiSecret: String, message: String, date: String, "": String, "HmacSHA512": String)
+//    val request = Http(url+sessionUrl)
+//      //  val request = Http(url+sessionUrl+"?userName="+userName + "&alias="+date)
+//      .param("userName", userName)
+//      .param("alias", date)
+//      .method("post")
+//      //.header("User-Agent", userAgent)
+//      //.header("Method", "POST")
+//      .header("Connection","Keep-Alive")
+//      .header("x-csod-date",date)
+//      .header("x-csod-signature",signed)
+//      .header("x-csod-api-key",apiId)
+//      .header("Content-Type","text/xml")
+//      .header("Accept","text/xml")
+//
+//    val response = request.postForm.asString
+//
+//    println(request.url)
+//    println(request.headers.mkString)
+//    println(response.body.mkString)
+//    println(response.headers)
+//
+//    response.body
+//  }
 
   def getDate(): String ={
     //date('Y-m-d').'T'.date('H:i:s').'.000'
@@ -156,11 +156,11 @@ object ODataClient {
     val secondes = new SimpleDateFormat("ss")
 
     val currentHourMinus1 = hour.format(today).toInt - 1
-    val currentSecondesMinus3 = secondes.format(today).toInt - 3
+    val currentSecondesMinus4 = secondes.format(today).toInt - 4
     val currentYearMonthDay = yearMonthDay.format(today)
     val currentMinutes = minutes.format(today)
 
-    val result = new String(currentYearMonthDay + "T" + currentHourMinus1 +":"+ currentMinutes +":"+ currentSecondesMinus3 +".000")
+    val result = new String(currentYearMonthDay + "T" + currentHourMinus1 +":"+ currentMinutes +":"+ currentSecondesMinus4 +".000")
     println(result)
     result
   }

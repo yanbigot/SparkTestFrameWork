@@ -1,5 +1,8 @@
 package sandbox
 
+import java.text.SimpleDateFormat
+import java.util.Calendar
+
 import org.scalacheck.Gen
 
 import scala.reflect.runtime.{universe => ru}
@@ -47,6 +50,8 @@ object Beach{
 
     print("parseLine")
     parseLine("","")
+
+    print(getDate())
   }
 
   def parseLine(line: String, pattern: String): Unit ={
@@ -56,5 +61,20 @@ object Beach{
     val result = patt.findAllMatchIn(dummyLine).toList
     println(result)
     patt.findAllMatchIn(dummyLine).foreach(println)
+  }
+
+  private def getDate(): String ={
+    //date('Y-m-d').'T'.date('H:i:s').'.000'
+    val today = Calendar.getInstance().getTime()
+
+    // create the date/time formatters
+    val yearMonthDay = new SimpleDateFormat("YYYY-MM-dd")
+    val hourMinuteSeconde = new SimpleDateFormat("hh-mm-ss")
+
+    val currentHour = yearMonthDay.format(today)      // 12
+    val currentMinute = hourMinuteSeconde.format(today)  // 29
+
+    println(currentHour, "T",currentMinute, ".000")
+    new String(currentHour + "T" + currentMinute + ".000")
   }
 }

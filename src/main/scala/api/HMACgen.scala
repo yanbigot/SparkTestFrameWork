@@ -8,9 +8,7 @@ import org.apache.commons.codec.binary.Base64
 
 object HMACgen {
   val url = "https://socgen-stg.csod.com"
-  val httpAuthenticationEndPoint = "/services/api/sts/session"
   val userName = ApiCode.getProperty(ApiCode.USER_NAME)
-  val httpMethod = "POST"
   val userAgent = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1312.52 Safari/537.17')"
   val apiId = ApiCode.getProperty(ApiCode.API_ID)
   val apiSecret = ApiCode.getProperty(ApiCode.API_SECRET)
@@ -52,8 +50,8 @@ object HMACgen {
     generateSignature(key: String, message: String, date: String, expected: String, algo: String)
   }
 
-  def buildStringToSign(date: String): String ={
-    httpMethod + "\n" + "x-csod-api-key:" + apiId + "\n" + "x-csod-date:" + date + "\n" + httpAuthenticationEndPoint
+  def buildStringToSign(date: String, httpMethod: String, keyName: String, key: String, endPoint: String): String ={
+    httpMethod + "\n" + keyName + ":" + key + "\n" + "x-csod-date:" + date + "\n" + endPoint
   }
 
   def generateSignature(key: String, message: String, date: String, expected: String, algo: String): String = {

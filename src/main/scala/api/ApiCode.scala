@@ -10,7 +10,7 @@ object ApiCode {
   val USER_NAME = "userName"
 
   def getProperty(prop: String): String ={
-    Source.fromFile(fname).getLines.filter(l => l.contains(prop)).map(_.split("=")(1)).mkString
+    Source.fromFile(fname).getLines.filter(l => l.contains(prop)).map(_.split(":")(1)).mkString
   }
 
   def main( args: Array[String] ): Unit = {
