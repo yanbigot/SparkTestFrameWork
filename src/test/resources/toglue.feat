@@ -1,0 +1,5 @@
+feature: myfeature is nice
+    scenario: my scenario
+        given: guive
+        when: wouaine
+        then: zen
