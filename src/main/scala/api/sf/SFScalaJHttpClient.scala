@@ -5,6 +5,17 @@ import scalaj.http.{Http, HttpRequest, HttpResponse}
 
 object SFScalaJHttpClient {
 
+
+
+  val FINISHED = "finished"
+  val SUBMITTED = "submitted"
+  val MAX_ATTEMPTS = 30
+  val BASIC_AUTH = SFApiCode.getProperty(SFApiCode.BASIC_AUTH)
+  val USERNAME = SFApiCode.getProperty(SFApiCode.USERNAME)
+  val COMPANY_ID = SFApiCode.getProperty(SFApiCode.COMPANY_ID)
+  val PASSWORD = SFApiCode.getProperty(SFApiCode.PASSWORD)
+  val URL = "https://api012.successfactors.eu/sfapi/v1/soap?wsdl";SFApiCode.getProperty(SFApiCode.URL)
+
   var sessionId = ""
   var status = ""
   var sessionCookie = ""
@@ -14,17 +25,6 @@ object SFScalaJHttpClient {
     "Connection" -> "keep-alive",
     "Cache-Control" -> "no-cache"
   )
-
-  val FINISHED = "finished"
-  val SUBMITTED = "submitted"
-  val MAX_ATTEMPTS = 30
-  val BASIC_AUTH = SFApiCode.getProperty(SFApiCode.BASIC_AUTH)
-  val USERNAME = SFApiCode.getProperty(SFApiCode.USERNAME)
-  val COMPANY_ID = SFApiCode.getProperty(SFApiCode.COMPANY_ID)
-  val PASSWORD = SFApiCode.getProperty(SFApiCode.PASSWORD)
-  val URL = SFApiCode.getProperty(SFApiCode.URL)
-
-
 
   def main( args: Array[String] ): Unit = {
     val sessionId = basicAuth(COMPANY_ID, USERNAME, PASSWORD)
@@ -64,13 +64,13 @@ object SFScalaJHttpClient {
           </urn:login>
         </soapenv:Body>
       </soapenv:Envelope>
-
     val request = Http(URL)
       .headers(HEADERS)
+      .timeout(10000, 10000)
       .postData(reqBody.mkString)
 
     val response = request.asString
-    logCall("AUTHENTICATION", request, response)
+    logCall("AUTHENTICATION", request, response, reqBody.mkString)
     retrieveSessionId(response.body).getOrElse("sessionId", "")
   }
   def retrieveSessionId( responseBody: String ): Map[String, String] = {
@@ -111,7 +111,7 @@ object SFScalaJHttpClient {
       .postData(reqBody)
 
     val response = request.asString
-    logCall("SUBMIT QUERY", request, response)
+    logCall("SUBMIT QUERY", request, response, reqBody)
     retrieveTaskId(response.body).getOrElse("taskId", "")
   }
   def retrieveTaskId( responseBody: String ): Map[String, String] = {
@@ -144,7 +144,7 @@ object SFScalaJHttpClient {
       .postData(reqBody)
 
     val response = request.asString
-    logCall("GET JOB STATUS", request, response)
+    logCall("GET JOB STATUS", request, response, reqBody)
     isJobFinished(response.body)
   }
   def isJobFinished( responseBody: String ): Boolean = {
@@ -179,14 +179,16 @@ object SFScalaJHttpClient {
       .postData(reqBody)
 
     val response = request.asString
-    logCall("GET JOB RESULT", request, response)
+    logCall("GET JOB RESULT", request, response, reqBody)
   }
 
-  def logCall(method: String ,request: HttpRequest,response: HttpResponse[String]): Unit ={
+  def logCall(method: String ,request: HttpRequest,response: HttpResponse[String], reqBody: String): Unit ={
     println(s"********************* $method *********************************")
     println("\n--- REQUEST ---")
     println("--- REQUEST HEADERS ---")
     request.headers.foreach(println)
+    println("--- REQUEST BODY ---")
+    println(reqBody)
     println("\n--- RESPONSE ---")
     println("--- RESPONSE COOKIES ---")
     response.cookies.mkString("\n")

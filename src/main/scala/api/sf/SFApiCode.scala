@@ -5,7 +5,7 @@ import scala.io.Source
 object SFApiCode {
 
   val fname = "D:\\DL\\s4s\\spark-scala-master\\spark-scala-master\\SparkTestFrameWork\\src\\main\\resources\\SFApi.properties"
-  val USERNAME = "userName"
+  val USERNAME = "username"
   val COMPANY_ID = "companyId"
   val PASSWORD = "password"
   val URL = "url"
