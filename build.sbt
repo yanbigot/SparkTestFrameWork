@@ -40,5 +40,10 @@ libraryDependencies += "com.holdenkarau" %% "spark-testing-base" % "2.2.0_0.8.0"
 // https://mvnrepository.com/artifact/org.apache.spark/spark-mllib_2.11
 libraryDependencies += "org.apache.spark" % "spark-mllib_2.11" % "2.2.0" % "provided"
 
+// https://mvnrepository.com/artifact/com.stackmob/newman
+libraryDependencies += "com.stackmob" %% "newman" % "1.3.5"
+
+libraryDependencies += "org.scalaj" % "scalaj-http_2.11" % "2.3.0"
+
 testOptions in Test += Tests.Argument(TestFrameworks.ScalaTest, "-h", "target/test-html-reports")
 
