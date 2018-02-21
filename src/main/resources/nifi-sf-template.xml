@@ -976,18 +976,7 @@
             </property>
             <property>
                 <name>generate-ff-custom-text</name>
-                <value>&lt;soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sfobject.sfapi.successfactors.com"&gt;
-                    &lt;soapenv:Header/&gt;
-                    &lt;soapenv:Body&gt;
-                    &lt;urn:login&gt;
-                    &lt;urn:credential&gt;
-                    &lt;urn:companyId&gt;SocGenTech&lt;/urn:companyId&gt;
-                    &lt;urn:username&gt;9123456789&lt;/urn:username&gt;
-                    &lt;urn:password&gt;Password&lt;/urn:password&gt;
-                    &lt;/urn:credential&gt;
-                    &lt;/urn:login&gt;
-                    &lt;/soapenv:Body&gt;
-                    &lt;/soapenv:Envelope&gt;</value>
+                <value></value>
             </property>
             <property>
                 <name>character-set</name>
@@ -1047,8 +1036,8 @@
                 <name>Attributes to Send</name>
             </property>
             <property>
-                <name>Basic Authentication Username</name>
-                <value>9123456789@SocGenTech</value>
+                <name></name>
+                <value></value>
             </property>
             <property>
                 <name>Basic Authentication Password</name>
